@@ -18,7 +18,13 @@ Rails.application.routes.draw do
   
   # Authentication routes
 >>>>>>> Stashed changes
+  
+  # Authentication routes
   get "login" => "sessions#new", as: :login
   post "login" => "sessions#create"
   delete "logout" => "sessions#destroy", as: :logout
+  
+  # User registration routes
+  get "signup" => "users#new", as: :signup
+  post "signup" => "users#create"
 end
