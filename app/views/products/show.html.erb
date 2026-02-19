@@ -1,22 +1,25 @@
-<div class="max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-lg text-white">
-    <div class="flex flex-col md:flex-row gap-6">
-      <div class="md:w-1/2 bg-gray-800 flex items-center justify-center p-4 rounded">
-        <% if @product.image.attached? %>
-          <%= image_tag @product.image.variant(resize_to_limit: [800, 800]), class: "object-contain w-full h-72" %>
-        <% else %>
-          <div class="text-gray-400">No image available</div>
-        <% end %>
-      </div>
+<div class="min-h-screen flex items-start justify-center py-32">
+  <div class="w-full max-w-6xl px-4">
+    <div class="bg-gray-900 rounded-xl shadow-xl overflow-hidden text-white">
+      <div class="md:flex md:items-stretch">
+        <div class="md:w-1/2 bg-gray-800 flex items-center justify-center p-6">
+          <% if @product.image.attached? %>
+            <%= image_tag @product.image.variant(resize_to_limit: [1200, 1200]), class: "object-cover w-full h-96 rounded-lg shadow-md" %>
+          <% else %>
+            <div class="w-full h-96 rounded-lg bg-gray-700 flex items-center justify-center text-gray-400">No image available</div>
+          <% end %>
+        </div>
 
-      <div class="md:w-1/2">
-        <h2 class="text-2xl font-semibold"><%= @product.name %></h2>
-        <p class="text-indigo-400 text-lg mt-2"><%= @product.formatted_price %></p>
-        <p class="text-gray-300 mt-4"><%= simple_format(@product.description) %></p>
+        <div class="md:w-1/2 p-12">
+          <h1 class="text-3xl font-bold"><%= @product.name %></h1>
+          <p class="text-indigo-400 text-2xl mt-3"><%= @product.formatted_price %></p>
+          <div class="text-gray-300 mt-6 space-y-4"><%= simple_format(@product.description) %></div>
 
-        <div class="mt-6 flex items-center space-x-3">
-          <%= button_to "Add to Cart", cart_items_path(product_id: @product.id), method: :post, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700" %>
-          <%= link_to "Close", products_path, class: "text-sm text-gray-300 hover:underline" %>
+          <div class="mt-8 flex items-center space-x-3">
+            <%= link_to "Back to products", products_path, class: "text-sm text-gray-300 hover:underline" %>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
