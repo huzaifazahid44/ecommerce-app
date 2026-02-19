@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   before_action :require_admin, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-    @products = Product.all.order(created_at: :desc)
+    @products = Product.with_attached_image.order(created_at: :desc)
   end
 
   def show
