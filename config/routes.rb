@@ -13,13 +13,10 @@ Rails.application.routes.draw do
   root "products#index"
   
   # Authentication routes
-<<<<<<< Updated upstream
-=======
   #products routes
   resources :products
   
   # Authentication routes
->>>>>>> Stashed changes
   get "login" => "sessions#new", as: :login
   post "login" => "sessions#create"
   delete "logout" => "sessions#destroy", as: :logout
