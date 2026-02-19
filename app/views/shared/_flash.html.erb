@@ -1,0 +1,13 @@
+<div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md">
+  <% flash.each do |type, message| %>
+    <% color = case type.to_sym
+      when :notice, :success then 'bg-green-600 text-white border-green-400'
+      when :alert, :error then 'bg-red-600 text-white border-red-400'
+      else 'bg-gray-800 text-white border-gray-600'
+    end %>
+    <div class="mb-2 px-4 py-3 rounded-lg border shadow-lg flex items-center justify-between animate-fade-in-up <%= color %>">
+      <span class="font-medium"><%= message %></span>
+      <button onclick="this.parentElement.style.display='none'" class="ml-4 text-xl leading-none">&times;</button>
+    </div>
+  <% end %>
+</div>

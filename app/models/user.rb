@@ -1,16 +1,31 @@
 class User < ApplicationRecord
   has_secure_password
 
+  ROLES = { user: "user", admin: "admin" }.freeze
+
   validates :username,
             presence: true, uniqueness: true
   validates :email, presence: true,
             uniqueness: true
+  validates :role, presence: true, inclusion: { in: ROLES.values }
 
   validates :password, presence: true,
             length: { minimum: 8 },
             if: :password_present_and_changed?
-  validate :password_requirements_are_met,
-           if: :password_present_and_changed?
+  validate  :password_requirements_are_met,
+            if: :password_present_and_changed?
+
+  # Role helper methods
+  def user?
+    role == "user"
+  end
+
+  def admin?
+    role == "admin"
+  end
+
+  scope :admins, -> { where(role: "admin") }
+  scope :regular_users, -> { where(role: "user") }
 
   private
 

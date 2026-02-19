@@ -23,7 +23,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-gray-800 min-h-screen">
+    <%= render "shared/flash" %>
     <%= yield %>
   </body>
 </html>
