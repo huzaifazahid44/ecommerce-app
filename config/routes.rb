@@ -11,13 +11,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "products#index"
-<<<<<<< Updated upstream
-=======
   #products routes
   resources :products
-  
-  # Authentication routes
->>>>>>> Stashed changes
   
   # Authentication routes
   get "login" => "sessions#new", as: :login
