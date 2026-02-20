@@ -8,3 +8,8 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* Hide the products grid while the new product form is open in the turbo frame */
+turbo-frame#new_product:not(:empty) ~ #products_grid {
+  display: none;
+}

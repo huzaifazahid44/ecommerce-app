@@ -1,0 +1,8 @@
+<%# Replace the edited product card with the freshly saved version %>
+<%= turbo_stream.replace dom_id(@product),
+      partial: "products/product", locals: { product: @product } %>
+
+<%# Flash notice — appears in-place without any redirect or page load %>
+<%= turbo_stream.prepend "flash",
+      partial: "shared/flash_message",
+      locals: { type: :notice, message: "\"#{@product.name}\" was updated." } %>

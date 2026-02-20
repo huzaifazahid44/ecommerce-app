@@ -16,16 +16,20 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      redirect_to @product, notice: "Product was successfully created."
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @product, notice: "Product was successfully created." }
+      end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream { render :new, status: :unprocessable_entity }
+        format.html         { render :new, status: :unprocessable_entity }
+      end
     end
   end
-  
 
   def edit
   end
-
 
   def update
     if @product.update(product_params)
@@ -38,7 +42,10 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
-    redirect_to products_path, notice: "Product was successfully deleted."
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to products_path, notice: "Product was successfully deleted." }
+    end
   end
 
   private
@@ -48,7 +55,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :stock_quantity)
+    params.require(:product).permit(:name, :description, :price, :stock_quantity, :image)
   end
 
   def require_admin
