@@ -1,4 +1,5 @@
-<div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md">
+<%# id="flash" — turbo streams target this div to inject flash messages without page reload %>
+<div id="flash" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md">
   <% flash.each do |type, message| %>
     <% color = case type.to_sym
       when :notice, :success then 'bg-green-600 text-white border-green-400'

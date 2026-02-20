@@ -1,0 +1,5 @@
+<%= turbo_stream.remove dom_id(@product) %>
+
+<%= turbo_stream.prepend "flash",
+      partial: "shared/flash_message",
+      locals: { type: :notice, message: "\"#{@product.name}\" was deleted." } %>

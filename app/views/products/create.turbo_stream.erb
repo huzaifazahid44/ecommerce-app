@@ -1,0 +1,8 @@
+<%= turbo_stream.prepend "products_grid",
+      partial: "products/product", locals: { product: @product } %>
+
+<%= turbo_stream.update "new_product", "" %>
+
+<%= turbo_stream.prepend "flash",
+      partial: "shared/flash_message",
+      locals: { type: :notice, message: "Product \"#{@product.name}\" was created." } %>
