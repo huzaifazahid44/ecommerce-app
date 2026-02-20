@@ -11,6 +11,15 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "products#index"
+
+  # Checkout routes
+  post '/checkout', to: 'checkouts#create'
+  get '/checkout/success', to: 'checkouts#success', as: :checkout_success
+  # Allow deleting by product_id via collection delete
+  delete '/cart_items', to: 'cart_items#destroy'
+  # Cart routes
+  get "cart" => "cart_items#index", as: :cart
+  resources :cart_items, only: [:create, :destroy]
   
   # Authentication routes
   #products routes
