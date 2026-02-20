@@ -27,7 +27,7 @@
             <% end %>
 
             <%= turbo_frame_tag "add_to_cart_#{@product.id}" do %>
-              <%= form_with url: cart_items_path, method: :post, local: false do |f| %>
+              <%= form_with url: cart_items_path, method: :post, local: false, data: { controller: 'cart', action: 'submit->cart#add' } do |f| %>
                 <%= hidden_field_tag :product_id, @product.id %>
                 <% allowed_max = [5, @product.stock_quantity.to_i].min %>
                 <div class="flex items-center gap-2">
