@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.with_attached_image.order(created_at: :desc)
+    @cart_items = current_user&.cart_items&.pluck(:product_id) || []
   end
 
   def show
