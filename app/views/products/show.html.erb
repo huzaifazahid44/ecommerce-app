@@ -11,10 +11,10 @@
           <% end %>
         </div>
 
-      <div class="md:w-1/2">
-        <h2 class="text-2xl font-semibold"><%= @product.name %></h2>
-        <p class="text-indigo-400 text-lg mt-2"><%= @product.formatted_price %></p>
-        <p class="text-gray-300 mt-4"><%= simple_format(@product.description) %></p>
+        <div class="md:w-1/2 p-12">
+          <h1 class="text-3xl font-bold"><%= @product.name %></h1>
+          <p class="text-indigo-400 text-2xl mt-3"><%= @product.formatted_price %></p>
+          <div class="text-gray-300 mt-6 space-y-4"><%= simple_format(@product.description) %></div>
 
           <div class="mt-8 flex flex-wrap items-center gap-3">
             <% if current_user&.admin? %>
