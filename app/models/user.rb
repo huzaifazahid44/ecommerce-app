@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :cart_items, dependent: :destroy
+  has_many :products, through: :cart_items
   has_secure_password
 
   ROLES = { user: "user", admin: "admin" }.freeze

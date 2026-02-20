@@ -1,0 +1,21 @@
+<% if defined?(@product) && @product %>
+  <%= turbo_stream.replace "add_to_cart_#{@product.id}" do %>
+    <%= render 'products/add_to_cart_state', product: @product, quantity: @current_quantity %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "cart_count" do %>
+  <%= render 'shared/cart_count', count: cart_total_quantity %>
+<% end %>
+
+<%= turbo_stream.replace "cart_dropdown" do %>
+  <%= render 'shared/cart_dropdown' %>
+<% end %>
+
+<%= turbo_stream.replace "cart_page" do %>
+  <%= render 'cart_items/cart_page' %>
+<% end %>
+
+<%= turbo_stream.replace "flash" do %>
+  <%= render 'shared/flash', notice: "Added to cart" %>
+<% end %>

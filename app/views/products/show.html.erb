@@ -3,11 +3,11 @@
   <div class="w-full max-w-6xl px-4">
     <div class="bg-gray-900 rounded-xl shadow-xl overflow-hidden text-white">
       <div class="md:flex md:items-stretch">
-        <div class="md:w-1/2 bg-gray-800 flex items-center justify-center p-6">
+        <div class="md:w-1/2 bg-gray-800 flex items-stretch p-6">
           <% if @product.image.attached? %>
-            <%= image_tag @product.image, class: "object-cover w-full h-96 rounded-lg shadow-md" %>
+            <%= image_tag @product.image, class: "object-contain w-full max-h-96 rounded-lg shadow-md" %>
           <% else %>
-            <div class="w-full h-96 rounded-lg bg-gray-700 flex items-center justify-center text-gray-400">No image available</div>
+            <div class="w-full h-full rounded-lg bg-gray-700 flex items-center justify-center text-gray-400">No image available</div>
           <% end %>
         </div>
 
@@ -24,6 +24,18 @@
               <%= link_to "Delete", product_path(@product),
                     data: { turbo_method: :delete, turbo_confirm: "Delete #{@product.name}? This cannot be undone.", turbo_frame: "_top" },
                     class: "inline-flex items-center px-4 py-2 rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700" %>
+            <% end %>
+
+            <%= turbo_frame_tag "add_to_cart_#{@product.id}" do %>
+              <%= form_with url: cart_items_path, method: :post, local: false do |f| %>
+                <%= hidden_field_tag :product_id, @product.id %>
+                <% allowed_max = [5, @product.stock_quantity.to_i].min %>
+                <div class="flex items-center gap-2">
+                  <%= number_field_tag :quantity, 1, min: 1, max: allowed_max, class: "w-20 text-sm rounded bg-gray-800 text-white px-2 py-1" %>
+                  <%= f.submit "Add to cart", class: "px-3 py-1 rounded bg-indigo-600 text-white text-sm" %>
+                </div>
+                <div class="text-xs text-gray-400 mt-1">Max per item: <%= allowed_max %></div>
+              <% end %>
             <% end %>
 
             <%= link_to "Back to products", products_path,

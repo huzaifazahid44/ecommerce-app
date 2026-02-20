@@ -1,0 +1,15 @@
+<%= turbo_stream.replace "cart_count" do %>
+  <%= render 'shared/cart_count', count: cart_total_quantity %>
+<% end %>
+
+<%= turbo_stream.replace "cart_dropdown" do %>
+  <%= render 'shared/cart_dropdown' %>
+<% end %>
+
+<%= turbo_stream.replace "flash" do %>
+  <%= render 'shared/flash', notice: "Removed from cart" %>
+<% end %>
+
+<%= turbo_stream.replace "cart_page" do %>
+  <%= render 'cart_items/cart_page' %>
+<% end %>
