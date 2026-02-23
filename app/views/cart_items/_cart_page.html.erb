@@ -1,14 +1,5 @@
 <%= turbo_stream_from cart_stream_name %>
 <div id="cart_page">
-  <% cart_hash = session[:cart] || {} %>
-  <% if session[:cart_token] %>
-    <% cart = Cart.find_by(token: session[:cart_token]) %>
-    <% items = cart ? cart.cart_items.includes(:product) : [] %>
-  <% else %>
-    <% product_ids = cart_hash.keys %>
-    <% items = Product.where(id: product_ids).map { |p| OpenStruct.new(product: p, quantity: cart_hash[p.id.to_s].to_i) } %>
-  <% end %>
-
   <% if items.blank? %>
     <div class="text-sm text-gray-400">Your cart is empty.</div>
   <% else %>
@@ -64,5 +55,4 @@
       <%= link_to 'Continue shopping', products_path, class: 'w-full inline-flex justify-center py-3 px-4 border border-gray-700 rounded text-sm text-gray-300' %>
     </div>
   <% end %>
-  </div>
 </div>

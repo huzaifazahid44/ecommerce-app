@@ -1,9 +1,15 @@
 <%= turbo_stream.replace "cart_count" do %>
-  <%= render 'shared/cart_count', count: cart_total_quantity %>
+  <%= render "shared/cart_count", count: cart_total_quantity %>
 <% end %>
 
 <%= turbo_stream.replace "cart_dropdown" do %>
-  <%= render 'shared/cart_dropdown' %>
+  <%= render "shared/cart_dropdown", items: @items %>
+<% end %>
+
+<%= turbo_stream.append "cart_debug" do %>
+  <div id="cart_debug" style="color:lime;background:black;padding:4px;margin:4px;">
+    Cart DESTROY debug: <%= Time.now %> | Cart: <%= session[:cart].inspect %> | Token: <%= session[:cart_token] %>
+  </div>
 <% end %>
 
 <%= turbo_stream.replace "flash" do %>
@@ -11,5 +17,5 @@
 <% end %>
 
 <%= turbo_stream.replace "cart_page" do %>
-  <%= render 'cart_items/cart_page' %>
+  <%= render 'cart_items/cart_page', items: @items %>
 <% end %>
