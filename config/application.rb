@@ -23,5 +23,10 @@ module EcommerceApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    # Ensure session and cookies middleware for ActionCable (Turbo Streams)
+    config.action_cable.mount_path = "/cable"
+    config.action_cable.disable_request_forgery_protection = true
+    config.action_cable.use ActionDispatch::Cookies
+    config.action_cable.use ActionDispatch::Session::CookieStore, key: "_ecommerce_app_session"
   end
 end
