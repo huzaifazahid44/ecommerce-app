@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_20_143500) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_23_120000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -45,7 +45,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_20_143500) do
     t.integer "product_id", null: false
     t.integer "quantity", default: 1, null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.index ["cart_id", "product_id"], name: "index_cart_items_on_cart_id_and_product_id", unique: true
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
     t.index ["product_id"], name: "index_cart_items_on_product_id"
