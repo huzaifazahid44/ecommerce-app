@@ -30,18 +30,7 @@ class ApplicationController < ActionController::Base
 
     # total quantity across session cart or persisted cart
     def cart_total_quantity
-      # prefer persisted cart if present in session
-      if session[:cart_token]
-        cart = Cart.find_by(token: session[:cart_token])
-        return cart ? cart.cart_items.sum(:quantity) : 0
-      end
-
-      # if user has persistent cart items (legacy), sum them
-      if current_user && current_user.respond_to?(:cart_items)
-        return current_user.cart_items.sum(:quantity)
-      end
-
-      # fallback to session cart sum
+      # Always use session cart for count
       current_session_cart.values.map(&:to_i).sum
     end
 
