@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
     helper_method :cart_stream_name
 
-    require 'securerandom'
+    require "securerandom"
 
     # per-session stream name so multiple browser tabs/windows for the same session
     # can subscribe and receive real-time cart updates

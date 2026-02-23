@@ -35,7 +35,7 @@
         <%= turbo_stream_from cart_stream_name %>
         <a href="<%= cart_path %>" class="m-4 flex items-center space-x-1">
         <!-- Render the cart_count partial (it outputs a span#cart_count) -->
-          <%= render 'shared/cart_count', count: current_user&.cart_items&.count || 0 %>
+          <%= render 'shared/cart_count', count: cart_total_quantity %>
         <!-- Cart icon (simple SVG) -->
           <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 22 22" aria-hidden="true">
           <path stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 6m12-6l2 6M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/>

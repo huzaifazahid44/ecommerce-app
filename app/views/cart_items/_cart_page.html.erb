@@ -1,5 +1,5 @@
 <%= turbo_stream_from cart_stream_name %>
-<div id="cart_dropdown">
+<div id="cart_page">
   <% cart_hash = session[:cart] || {} %>
   <% if session[:cart_token] %>
     <% cart = Cart.find_by(token: session[:cart_token]) %>
@@ -60,8 +60,9 @@
     </div>
 
     <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-      <%= button_to 'Checkout', checkout_path, method: :post, class: 'w-full inline-flex justify-center py-3 px-4 bg-indigo-600 text-white rounded', form: { data: { turbo: true } } %>
+      <%= button_to 'Checkout', checkout_path, method: :post, class: 'w-full inline-flex justify-center py-3 px-4 bg-indigo-600 text-white rounded', form: { data: { turbo: false } } %>
       <%= link_to 'Continue shopping', products_path, class: 'w-full inline-flex justify-center py-3 px-4 border border-gray-700 rounded text-sm text-gray-300' %>
     </div>
   <% end %>
+  </div>
 </div>
