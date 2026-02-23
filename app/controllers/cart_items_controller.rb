@@ -5,6 +5,10 @@ class CartItemsController < ApplicationController
 
   def index
     @items = build_cart_items
+    respond_to do |format|
+      format.html # renders app/views/cart_items/index.html.erb
+      format.turbo_stream
+    end
   end
 
   def create
@@ -26,7 +30,7 @@ class CartItemsController < ApplicationController
     begin
       Rails.logger.debug "[DEBUG] Broadcasting Turbo Streams for ADD (cart_stream_name=#{cart_stream_name})"
       Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_count", partial: "shared/cart_count", locals: { count: cart_total_quantity })
-      Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_dropdown", partial: "shared/cart_dropdown")
+      Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_dropdown", partial: "shared/cart_dropdown", locals: { items: @items })
       Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_page", partial: "cart_items/cart_page")
     rescue => e
       Rails.logger.debug "[DEBUG] Turbo broadcast failed: "+e.message
@@ -50,20 +54,20 @@ class CartItemsController < ApplicationController
 
     @items = build_cart_items
 
-      # Broadcast the updated cart to other tabs in this session
-      begin
-        Rails.logger.debug "[DEBUG] Broadcasting Turbo Streams for REMOVE (cart_stream_name=#{cart_stream_name})"
-        Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_count", partial: "shared/cart_count", locals: { count: cart_total_quantity })
-        Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_dropdown", partial: "shared/cart_dropdown")
-        Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_page", partial: "cart_items/cart_page")
-      rescue => e
-        Rails.logger.debug "[DEBUG] Turbo broadcast failed: "+e.message
-      end
+    # Broadcast the updated cart to other tabs in this session
+    begin
+      Rails.logger.debug "[DEBUG] Broadcasting Turbo Streams for REMOVE (cart_stream_name=#{cart_stream_name})"
+      Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_count", partial: "shared/cart_count", locals: { count: cart_total_quantity })
+      Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_dropdown", partial: "shared/cart_dropdown", locals: { items: @items })
+      Turbo::StreamsChannel.broadcast_replace_to(cart_stream_name, target: "cart_page", partial: "cart_items/cart_page")
+    rescue => e
+      Rails.logger.debug "[DEBUG] Turbo broadcast failed: "+e.message
+    end
 
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to cart_path, notice: "Removed from cart." }
-      end
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_back fallback_location: cart_path, notice: "Removed from cart." }
+    end
   end
 
   private
