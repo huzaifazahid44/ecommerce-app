@@ -69,6 +69,8 @@ class CheckoutsController < ApplicationController
     session.delete(:cart)
     # remember the persisted cart token so we can show it later if needed
     session[:cart_token] = cart.token
+    # Reset the cart stream so new cart actions use a new stream
+    session.delete(:cart_stream_id)
 
     # For Turbo stream requests, return a turbo-stream that triggers a client-side redirect.
     if request.format.turbo_stream?
