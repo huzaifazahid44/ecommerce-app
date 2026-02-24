@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
-  before_action :require_admin, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_product, only: [ :show, :edit, :update, :destroy ]
+  before_action :require_admin, only: [ :new, :create, :edit, :update, :destroy ]
 
   def index
     @products = Product.with_attached_image.order(created_at: :desc)
@@ -23,8 +23,14 @@ class ProductsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.turbo_stream { render :new, status: :unprocessable_entity }
-        format.html         { render :new, status: :unprocessable_entity }
+        format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(
+        'new_product',
+        partial: 'form',
+        locals: { product: @product }
+      ), status: :unprocessable_entity
+    }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end

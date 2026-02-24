@@ -65,12 +65,9 @@ class CheckoutsController < ApplicationController
       redirect_to cart_path, alert: "Could not create Stripe Checkout session: #{e.message}" and return
     end
 
-    # Clear the session cart (we now have the persisted cart)
-    session.delete(:cart)
+
     # remember the persisted cart token so we can show it later if needed
     session[:cart_token] = cart.token
-    # Reset the cart stream so new cart actions use a new stream
-    session.delete(:cart_stream_id)
 
     # For Turbo stream requests, return a turbo-stream that triggers a client-side redirect.
     if request.format.turbo_stream?
@@ -104,6 +101,9 @@ class CheckoutsController < ApplicationController
           product.save!
         end
         @cart.update!(paid: true)
+        # Clear the session cart only after successful payment
+        session.delete(:cart)
+        session.delete(:cart_stream_id)
       end
     end
   end

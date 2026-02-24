@@ -4,11 +4,12 @@ class ApplicationController < ActionController::Base
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
+
     helper_method :current_user
-  def current_user
+    def current_user
     return @current_user if defined?(@current_user)
     @current_user = User.find_by(id: session[:user_id])
-  end
+    end
 
     helper_method :current_session_cart, :cart_total_quantity
 
@@ -34,10 +35,10 @@ class ApplicationController < ActionController::Base
       current_session_cart.values.map(&:to_i).sum
     end
 
-  helper_method :logged_in?
-  def logged_in?
+    helper_method :logged_in?
+    def logged_in?
     current_user.present?
-  end
+    end
 
   def require_user
     unless logged_in?
